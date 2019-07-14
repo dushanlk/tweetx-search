@@ -39,7 +39,8 @@ public class TweetSearchImpl implements TweetSearch {
                 .setOAuthConsumerKey(configurationService.get(AUTH_CONSUMER_KEY))
                 .setOAuthConsumerSecret(configurationService.get(AUTH_CONSUMER_SECRET))
                 .setOAuthAccessToken(configurationService.get(AUTH_ACCESS_TOKEN))
-                .setOAuthAccessTokenSecret(configurationService.get(AUTH_ACCESS_TOKEN_SECRET));
+                .setOAuthAccessTokenSecret(configurationService.get(AUTH_ACCESS_TOKEN_SECRET))
+                .setTweetModeExtended(true);
 
         final TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build());
         final Twitter twitter = twitterFactory.getInstance();

@@ -90,7 +90,7 @@ public class Tweet {
         return new Tweet(
                 status.getId(),
                 new SimpleDateFormat("yyyy-MM-dd HH:mm").format(status.getCreatedAt()),
-                status.getText(),
+                status.getRetweetedStatus() != null ? status.getRetweetedStatus().getText() : status.getText(),
                 Arrays.stream(status.getHashtagEntities()).map(HashtagEntity::getText).collect(Collectors.toList()),
                 status.getUser().getScreenName(),
                 status.getUser().getProfileImageURL());
