@@ -2,6 +2,7 @@ package com.tweetx.search.core.service;
 
 import com.tweetx.search.core.api.HashTagCounter;
 import com.tweetx.search.core.api.SearchResponse;
+import com.tweetx.search.core.api.Status;
 import com.tweetx.search.core.api.Tweet;
 import com.tweetx.search.core.configuration.ConfigurationService;
 import org.osgi.service.component.annotations.Component;
@@ -15,6 +16,8 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.tweetx.search.core.api.Status.INTERNAL_SERVER_ERROR;
+import static com.tweetx.search.core.api.Status.NO_TWEETS_FOUND;
 import static com.tweetx.search.core.configuration.ConfigConstants.*;
 
 /**
@@ -41,26 +44,21 @@ public class TweetSearchImpl implements TweetSearch {
         final TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build());
         final Twitter twitter = twitterFactory.getInstance();
 
-        /*
-         * Top 100 results.
-         * Top 10 hash tags.
-         * Number of times for hash tags.
-         * */
         try {
             final QueryResult result = twitter.search(new Query(keyword).count(100));
             final List<Tweet> tweets = result.getTweets().stream().map(Tweet::build).collect(Collectors.toList());
 
-            final SearchResponse response = new SearchResponse();
-            response.setTweets(tweets);
-            response.setTopHashTags(HashTagCounter.build().getTopHashTags(tweets));
-
-            Response.ResponseBuilder rspBuilder = Response.ok(response);
-            rspBuilder.header("Access-Control-Allow-Origin", "*");
-
-            return rspBuilder.build();
+            if (tweets.size() > 0) {
+                final SearchResponse response = new SearchResponse(Status.SUCCESS, tweets, HashTagCounter.build().getTopHashTags(tweets));
+                LOGGER.debug("Generated response [{}]", response);
+                return response.toResponse();
+            } else {
+                LOGGER.debug("No tweets found for the query [{}]", keyword);
+                return new SearchResponse(NO_TWEETS_FOUND).toResponse();
+            }
         } catch (TwitterException e) {
             LOGGER.error("Error occurred", e);
-            return Response.status(e.getStatusCode(), e.getErrorMessage()).build();
+            return new SearchResponse(INTERNAL_SERVER_ERROR).toResponse();
         }
     }
 

@@ -1,5 +1,7 @@
 package com.tweetx.search.core.api;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import java.util.List;
 
 /**
@@ -17,6 +19,18 @@ public class SearchResponse {
     private List<HashTag> topHashTags;
 
     public SearchResponse() {
+    }
+
+    public SearchResponse(Status status) {
+        this.status = status.getCode();
+        this.description = status.getDescription();
+    }
+
+    public SearchResponse(Status status, List<Tweet> tweets, List<HashTag> topHashTags) {
+        this.status = status.getCode();
+        this.description = status.getDescription();
+        this.tweets = tweets;
+        this.topHashTags = topHashTags;
     }
 
     public SearchResponse(int status, String description, List<Tweet> tweets, List<HashTag> topHashTags) {
@@ -56,6 +70,12 @@ public class SearchResponse {
 
     public void setTopHashTags(List<HashTag> topHashTags) {
         this.topHashTags = topHashTags;
+    }
+
+    public Response toResponse() {
+        final ResponseBuilder builder = Response.status(status, description).entity(this);
+        builder.header("Access-Control-Allow-Origin", "*");
+        return builder.build();
     }
 
     @Override
