@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.tweetx.search</groupId>
+        <artifactId>tweetx-search</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.tweetx.search.core</groupId>
+    <artifactId>tweetx-core</artifactId>
+    <packaging>pom</packaging>
+    <name>tweetx-core</name>
+
+
+  <modules>
+    <module>tweetx-api</module>
+    <module>tweetx-configuration</module>
+    <module>tweetx-rest</module>
+    <module>tweetx-service</module>
+  </modules>
+</project>

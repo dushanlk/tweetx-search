@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.tweetx.search</groupId>
+        <artifactId>tweetx-search</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.tweetx.search.distro</groupId>
+    <artifactId>tweetx-distro</artifactId>
+    <packaging>feature</packaging>
+    <name>tweetx-distro</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.tweetx.search.runtime</groupId>
+            <artifactId>tweetx-runtime</artifactId>
+            <version>${project.version}</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.karaf.tooling</groupId>
+                <artifactId>karaf-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <startLevel>50</startLevel>
+                    <aggregateFeatures>true</aggregateFeatures>
+                    <!--  <resolver>(obr)</resolver> -->
+                    <checkDependencyChange>true</checkDependencyChange>
+                    <failOnDependencyChange>false</failOnDependencyChange>
+                    <logDependencyChanges>true</logDependencyChanges>
+                    <overwriteChangedDependencies>true</overwriteChangedDependencies>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
