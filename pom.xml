@@ -19,7 +19,7 @@
         <jersy.client.version>2.27</jersy.client.version>
         <jetty.version>9.4.6.v20170531</jetty.version>
         <joda.time.version>2.10.1</joda.time.version>
-        <junit.version>3.8.1</junit.version>
+        <junit.version>4.13.1</junit.version>
         <karaf.version>4.2.0</karaf.version>
         <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
         <maven.resource.plugin.version>3.1.0</maven.resource.plugin.version>
